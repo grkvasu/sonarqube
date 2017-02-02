@@ -256,6 +256,13 @@ public class IssueFieldsSetter {
     }
   }
 
+  public void setCreationDate(DefaultIssue issue, Date d, IssueChangeContext context) {
+    // TODO do we need date comparison, as in setCloseDate?
+    issue.setCreationDate(d);
+    issue.setUpdateDate(context.date());
+    issue.setChanged(true);
+  }
+
   public boolean setGap(DefaultIssue issue, @Nullable Double d, IssueChangeContext context) {
     if (!Objects.equals(d, issue.gap())) {
       issue.setGap(d);
