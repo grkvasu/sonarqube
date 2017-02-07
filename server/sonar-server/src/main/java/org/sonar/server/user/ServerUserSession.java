@@ -113,6 +113,9 @@ public class ServerUserSession extends AbstractUserSession {
 
   @Override
   public boolean hasOrganizationPermission(String organizationUuid, String permission) {
+    if (isRoot()) {
+      return true;
+    }
     if (permissionsByOrganizationUuid == null) {
       permissionsByOrganizationUuid = HashMultimap.create();
     }

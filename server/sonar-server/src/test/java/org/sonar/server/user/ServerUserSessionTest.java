@@ -141,7 +141,7 @@ public class ServerUserSessionTest {
   }
 
   @Test
-  public void hasComponentUuidPermission_returns_true_when_flag_is_true_on_UserDto_no_matter_if_user_has_project_permission_for_given_uuid() {
+  public void hasComponentUuidPermission_returns_true_when_root_no_matter_if_user_has_project_permission_for_given_uuid() {
     UserSession underTest = newUserSession(ROOT_USER_DTO);
 
     assertThat(underTest.hasComponentUuidPermission(UserRole.USER, FILE_UUID)).isTrue();
@@ -200,6 +200,13 @@ public class ServerUserSessionTest {
     assertThat(session.hasOrganizationPermission(org.getUuid(), GlobalPermissions.PROVISIONING)).isTrue();
     assertThat(session.hasOrganizationPermission(org.getUuid(), GlobalPermissions.SYSTEM_ADMIN)).isFalse();
     assertThat(session.hasOrganizationPermission("another-org", GlobalPermissions.PROVISIONING)).isFalse();
+  }
+
+  @Test
+  public void hasOrganizationPermission_always_returns_true_for_roots() {
+    UserSession session = newUserSession(ROOT_USER_DTO);
+    assertThat(session.hasOrganizationPermission("an-uuid", GlobalPermissions.PROVISIONING)).isTrue();
+    assertThat(session.hasOrganizationPermission("an-uuid", GlobalPermissions.SYSTEM_ADMIN)).isTrue();
   }
 
   @Test
